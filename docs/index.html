@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cybersecurity Assessment Guidance Portal</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body data-theme="light">
+
+<header class="topbar">
+  <div class="header-left">
+    <img src="https://raw.githubusercontent.com/zachary122687/Assessment-Guidance-Portal/main/eis-logo.png"
+      class="header-logo" alt="Enterprise Information Services logo">
+    <div class="header-title">
+      Cybersecurity Services – Assessment Guidance Portal
+    </div>
+  </div>
+
+  <nav class="actions">
+    <div class="search">
+      <input id="searchInput" type="search" placeholder="Search guidance..." aria-label="Search portal">
+    </div>
+    <button class="btn outline" id="themeToggle">🌙</button>
+  </nav>
+</header>
+
+<div class="hero"
+  style="background-image:url('https://raw.githubusercontent.com/zachary122687/Assessment-Guidance-Portal/main/globe-header.jpg');">
+</div>
+
+<aside class="sidebar">
+  <h3>Navigation</h3>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#important-documents">Important Documents</a></li>
+    <li><a href="#templates">Templates</a></li>
+    <li><a href="#resources">Resources</a></li>
+    <li><a href="#announcements">Announcements</a></li>
+  </ul>
+</aside>
+
+<main class="content">
+
+  <!-- Overview -->
+  <section id="overview" class="card">
+    <h2>Overview</h2>
+    <p>
+      Welcome to the Cybersecurity Assessment Guidance Portal. This portal provides an alternative to
+      the GitHub user interface to help facilitate a more intuitive experience. 
+    </p>
+  </section>
+
+  <!-- Important Documents -->
+  <section id="important-documents" class="card">
+    <h2>Important Documents</h2>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="schedule">Assessment Schedule</button>
+      <button class="tab" data-tab="request">Artifact Request</button>
+      <button class="tab" data-tab="collector">Artifact Collector PS Scripts</button>
+      <button class="tab" data-tab="index">Assessment Index</button>
+      <button class="tab" data-tab="relationships">Safeguard Relationships</button>
+      <button class="tab" data-tab="kql">Defender KQL</button>
+      <button class="tab" data-tab="grouppolicy">Group Policy Settings</button>
+      <button class="tab" data-tab="recommend">Implementation Recommendations</button>
+    </div>
+
+    <div class="tab-panels">
+      <div class="panel active" id="panel-schedule">
+        <div id="scheduleContent">
+          <p><a href="https://www.oregon.gov/eis/cyber-security-services/Documents/eis-css-assessment-schedule.pdf"
+              target="_blank" rel="noopener">Open Cybersecurity Assessment Schedule (PDF)</a></p>
+        </div>
+      </div>
+      <div class="panel" id="panel-request"><div></div></div>
+      <div class="panel" id="panel-collector"><div></div></div>
+      <div class="panel" id="panel-index"><div></div></div>
+      <div class="panel" id="panel-relationships"><div></div></div>
+      <div class="panel" id="panel-kql"><div></div></div>
+      <div class="panel" id="panel-grouppolicy"><div></div></div>
+      <div class="panel" id="panel-recommend"><div></div></div>
+    </div>
+  </section>
+
+  <!-- Templates -->
+  <section id="templates" class="card">
+    <h2>Assessment Templates</h2>
+    <ul>
+      <li><a href="https://github.com/stateoforegon-eis-css/Oregon-CIS-Assessments/raw/refs/heads/main/CIS%20v8.0%20IG1+%20Assessment%20Workbook%20TEMPLATE.xlsx" target="_blank">SelfAssessmentWorkbook.xlsx</a> — Cybersecurity Self-Assessment Workbook.</li>
+    </ul>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources" class="card">
+    <h2>Resources</h2>
+    <div class="grid two">
+      <div>
+        <h3>External Templates</h3>
+        <ul>
+          <li><a href="https://www.cisecurity.org/insights/white-papers/cis-controls-inventory-tracking-spreadsheets" target="_blank">CIS Inventory Spreadsheet</a> — Center for Internet Security Inventory Example.</li>
+          <li><a href="https://www.cisecurity.org/insights/blog/6-new-policy-templates-to-help-you-enact-cis-controls-ig1?gad_source=1&gad_campaignid=10435527986&gbraid=0AAAAADLJ4LKnVquvCThzFtsPMLMw-h64S&gclid=CjwKCAjwpcTNBhA5EiwAdO1S9nH92BcUNvfv9W8leqSqooGsrmX_MRUikfun4JBkOXCfMIgIRGT5uBoCjLEQAvD_BwE" target="_blank">CIS Policy Templates</a> — Center for Internet Security Policy Templates.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Docs</h3>
+        <ul>
+          <li><a href="https://www.oregon.gov/eis/cyber-security-services/Documents/eis-css-statewide-information-technology(IT)-control-standards.pdf" target="_blank">Statewide Standards</a></li>
+          <li><a href="https://www.oregon.gov/das/Policies/107-004-052.pdf" target="_blank">Statewide Cyber and Information Security policy 107-004-052</a></li>
+          <li><a href="https://www.oregon.gov/das/Policies/107-004-160.pdf" target="_blank">Data Governance Policy</a></li>
+          <li><a href="https://www.oregon.gov/das/Policies/Data%20Governance%20Maturity%20Model.xlsx" target="_blank">Data Governance Maturity Assessment Workbook</a></li>
+          <li><a href="https://www.oregon.gov/das/Policies/Data%20Governance%20Plan%20Template.docx" target="_blank">Data Governance Plan Template</a></li>
+          <li><a href="https://www.oregon.gov/eis/cyber-security-services/pages/guidance-for-state-agencies.aspx" target="_blank">Security general guidance</a></li>
+          <li><a href="https://www.oregon.gov/eis/siteassets/eis-information-security-incident-response-plan-20230116.pdf" target="_blank">Security Incident Response</a></li>
+          <li><a href="https://www.oregon.gov/eis/cyber-security-services/Documents/eis-css-statewide-information-security-program-plan.pdf" target="_blank">Statewide Information Security Plan</a></li>
+          <li><a href="https://csrc.nist.gov/pubs/sp/800/34/r1/upd1/final" target="_blank">National Institute of Standards and Technology(NIST) Special Publication 800-34</a></li>
+          <li><a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final" target="_blank">National Institute of Standards and Technology(NIST) Special Publication 800-61</a></li>
+          <li><a href="https://csrc.nist.gov/pubs/sp/800/88/r2/final" target="_blank">National Institute of Standards and Technology(NIST) Special Publication 800-88</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Links</h3>
+        <ul>
+          <li><a href="https://www.oregon.gov/eis/cyber-security-services/pages/default.aspx" target="_blank">CSS Homepage</a> — Cyber Security Services Homepage.</li>
+          <li><a href="https://cas8.docs.cisecurity.org/en/latest/" target="_blank">Center for Internet Security Control Assessment Specifications</a></li>
+          <li><a href="https://www.oregonlegislature.gov/bills_laws/ors/ors276A.html" target="_blank">Oregon Revised Statutes</a> — ORS 276A.203(4)(g), ORS 276A.300(3), ORS 276A.306(3).</li>
+          <li><a href="https://www.cisecurity.org/cis-benchmarks/" target="_blank">CIS Benchmarks</a></li>
+          <li><a href="https://www.cisecurity.org/cybersecurity-best-practices/" target="_blank">CIS Cybersecurity Best Practices</a></li>
+          <li><a href="https://www.cisecurity.org/insights/white-papers/the-cost-of-cyber-defense-cis-controls-ig1" target="_blank">CIS White Paper The Cost of Cyber Defense</a></li>
+          <li><a href="https://www.cisecurity.org/resources/?type=post" target="_blank">CIS Blog</a></li>
+          <li><a href="https://www.cisa.gov/" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — Homepage</li>
+          <li><a href="https://www.cisa.gov/topics/cybersecurity-best-practices" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — Best Practices</li>
+          <li><a href="https://www.cisa.gov/topics/cyber-threats-and-advisories/information-sharing" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — Threat Advisory</li>
+          <li><a href="https://www.cisa.gov/stopransomware" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — Ransomware</li>
+          <li><a href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — News</li>
+          <li><a href="https://www.cisa.gov/resources-tools/resources" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — Tools</li>
+          <li><a href="https://www.cisa.gov/news-events/directives" target="_blank">Cybersecurity & Infrastructure Security Agency (CISA)</a> — Directives</li>
+          <li><a href="https://www.sans.org/" target="_blank">SANS.org</a> — Homepage</li>
+          <li><a href="https://www.sans.org/newsletters/" target="_blank">SANS.org</a> — Newsletter</li>
+          <li><a href="https://www.sans.org/white-papers" target="_blank">SANS.org</a> — White Papers</li>
+          <li><a href="https://www.sans.org/security-resources" target="_blank">SANS.org</a> — Security Resources</li>
+          <li><a href="https://isc.sans.edu/" target="_blank">SANS.org</a> — ISC</li>
+          <li><a href="https://isctv.sans.edu/" target="_blank">SANS.org</a> — ISCTV</li>
+          <li><a href="https://attack.mitre.org/" target="_blank">MITRE ATT&CK</a> — Homepage</li>
+          <li><a href="https://owasp.org/" target="_blank">Open Web Application Security Project (OWASP)</a> — Homepage</li>
+          <li><a href="https://owasp.org/www-project-top-ten" target="_blank">OWASP Top Ten - Top 10 Web Application Security Risks</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Announcements -->
+  <section id="announcements" class="card">
+    <h2>Announcements</h2>
+    <ul>
+      <li><strong>2026-04-01</strong> — Initial launch of the Guidance Portal</li>
+      <li><strong>2026-04-15</strong> — Added Release Readiness checklist</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <img src="https://raw.githubusercontent.com/zachary122687/Assessment-Guidance-Portal/main/cyber-command-seal.png"
+    class="footer-seal" alt="State Cyber Command Seal">
+  <p>Enterprise Information Services — State of Oregon</p>
+  <p>Cybersecurity Services Guidance Portal</p>
+  <small>© <span id="year"></span> Managed by the Cybersecurity Assessment Team</small>
+</footer>
+
+<script>
+// =================== Theme & Year ===================
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("themeToggle");
+  const root = document.documentElement;
+  let theme = localStorage.getItem("theme") || "light";
+  root.dataset.theme = theme;
+  toggle.textContent = theme === "dark" ? "🌙" : "☀️";
+  toggle.addEventListener("click", () => {
+    theme = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = theme;
+    toggle.textContent = theme === "dark" ? "🌙" : "☀️";
+    localStorage.setItem("theme", theme);
+  });
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // =================== Tabs & Markdown Loader ===================
+  const markdownFiles = {
+    request: "Artifact-Request.md",
+    collector: "Artifact-Collector-Powershell-Scripts.md",
+    index: "CSS-Assessment-Index.md",
+    relationships: "CSS-Assessment-Safeguard-Interrelationships.md",
+    kql: "Defender-KQL.md",
+    grouppolicy: "Group-Policy-Settings.md",
+    recommend: "Implementation-Recommendations.md"
+  };
+  const repoBase = "https://raw.githubusercontent.com/stateoforegon-eis-css/Oregon-CIS-Assessments/main/";
+
+  const tabs = document.querySelectorAll(".tab");
+  tabs.forEach(tab => {
+    tab.addEventListener("click", async () => {
+      const tabName = tab.dataset.tab;
+
+      // Activate tab & panel
+      tabs.forEach(t => t.classList.remove("active"));
+      tab.classList.add("active");
+      document.querySelectorAll(".panel").forEach(panel => {
+        panel.classList.toggle("active", panel.id === "panel-" + tabName);
+      });
+
+      // Load Markdown dynamically if it exists
+      if (!markdownFiles[tabName]) return;
+      const panel = document.getElementById("panel-" + tabName);
+      if (!panel) return;
+      const container = panel.querySelector("div");
+      if (container.dataset.loaded === "true") return;
+
+      container.innerHTML = "Loading...";
+      try {
+        const res = await fetch(repoBase + markdownFiles[tabName]);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const md = await res.text();
+        container.innerHTML = marked.parse(md);
+        container.dataset.loaded = "true";
+      } catch (err) {
+        console.error("Markdown load failed:", err);
+        container.innerHTML = "<p style='color:red'>Failed to load document.</p>";
+      }
+    });
+  });
+
+  // =================== Search ===================
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener("input", e => {
+    const query = e.target.value.toLowerCase();
+    document.querySelectorAll(".card").forEach(card => {
+      card.style.display = card.innerText.toLowerCase().includes(query) ? "" : "none";
+    });
+  });
+});
+</script>
+
+</body>
+</html>
