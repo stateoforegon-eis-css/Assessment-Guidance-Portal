@@ -1,0 +1,258 @@
+/* Root Variables & Colors */
+:root {
+  /* Official EIS Colors */
+  --primary-dark: #203864;
+  --primary-blue: #1870a3;
+  --accent-teal: #40c0bd;
+  --accent-green: #90c05f;
+  --accent-orange: #faa933;
+  --accent-red: #f0516c;
+
+  /* Light Theme Defaults */
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --muted: #5a5a5a;
+  --border: #d9e1ec;
+}
+
+/*Global Styles*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Aptos, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  grid-template-rows: 80px 1fr auto;
+  grid-template-areas:
+    "topbar topbar"
+    "sidebar content"
+    "footer footer";
+}
+
+/*Header / Topbar*/
+.topbar {
+  grid-area: topbar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--primary-dark);
+  color: white;
+  padding: 0 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.header-logo {
+  height: 40px;
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/*Hero Image*/
+.hero {
+  background-image: url("globe-header.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 140px;
+  border-bottom: 3px solid var(--primary-blue);
+}
+
+/*Sidebar*/
+.sidebar {
+  grid-area: sidebar;
+  padding: 20px;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+}
+
+.sidebar h3 {
+  color: var(--primary-dark);
+}
+
+.sidebar a {
+  display: block;
+  padding: 8px;
+  color: var(--primary-blue);
+  text-decoration: underline;
+  border-radius: 6px;
+}
+
+.sidebar a:hover {
+  color: #40c0bd;
+  background: rgba(64, 192, 189, 0.1);
+}
+
+/*Main Content*/
+.content {
+  grid-area: content;
+  padding: 30px;
+  display: grid;
+  gap: 20px;
+}
+
+/*Cards*/
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  color: var(--text); /* Default text color */
+}
+
+.card h2,
+.card h3,
+.card p,
+.card li,
+.card details summary,
+.card details p {
+  color: var(--text); /* Ensure all text inside cards follows text variable */
+}
+
+.card a {
+  color: var(--primary-blue);
+  text-decoration: underline;
+}
+
+.card a:hover {
+  color: #40c0bd;
+}
+
+/*Buttons*/
+.btn {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  background: var(--primary-blue);
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+/*Status Colors*/
+.status.ok { color: var(--accent-green); }
+.status.warn { color: var(--accent-orange); }
+.status.pending { color: var(--primary-blue); }
+
+/*Footer*/
+.footer {
+  grid-area: footer;
+  background: var(--primary-dark);
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.footer-seal {
+  height: 80px;
+  margin-top: 10px;
+}
+
+/*Tabs*/
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.tab {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  color: var(--text); /* default tab text color */
+}
+
+.tab.active {
+  background: var(--primary-blue);
+  color: white;
+  border-color: var(--primary-blue);
+}
+
+/*Panels*/
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+/*Dark Mode Styles*/
+[data-theme="dark"] {
+  --bg: #1a1a1a;
+  --card: #242424;
+  --text: #ffffff; /* ALL text white */
+  --muted: #ffffff;
+  --border: #444444;
+}
+
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+[data-theme="dark"] .card {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .card h2,
+[data-theme="dark"] .card h3,
+[data-theme="dark"] .card p,
+[data-theme="dark"] .card li,
+[data-theme="dark"] .card details summary,
+[data-theme="dark"] .card details p {
+  color: var(--text); /* Ensure headings, paragraphs, lists, tab content are white */
+}
+
+/* Hyperlinks stay blue in dark mode */
+[data-theme="dark"] .card a,
+[data-theme="dark"] .sidebar a {
+  color: #1870a3;
+}
+
+/* Dark mode tabs */
+[data-theme="dark"] .tab {
+  background-color: #333;
+  border-color: #555;
+  color: white; /* white text for inactive tabs */
+}
+
+[data-theme="dark"] .tab.active {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  color: white;
+}
+
+/*Responsive*/
+@media (max-width: 900px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "topbar"
+      "content"
+      "footer";
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
