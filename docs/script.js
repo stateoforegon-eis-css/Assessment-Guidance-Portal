@@ -41,21 +41,6 @@ function initFooterYear() {
 }
 
 // ========================================
-// Search
-// ========================================
-function initSearch() {
-  const input = document.getElementById("searchInput");
-  if (!input) return;
-
-  input.addEventListener("input", (e) => {
-    const query = (e.target.value || "").toLowerCase();
-    document.querySelectorAll(".card").forEach((card) => {
-      card.style.display = card.innerText.toLowerCase().includes(query) ? "" : "none";
-    });
-  });
-}
-
-// ========================================
 // Load Markdown from GitHub
 // ========================================
 async function loadMarkdown(url, container) {
