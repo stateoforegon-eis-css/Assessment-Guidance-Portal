@@ -49,18 +49,18 @@
     <h2>Important Documents</h2>
 
     <div class="tabs">
-      <button class="tab active" data-tab="schedule">Assessment Schedule</button>
+      <button class="tab active" data-tab="index">Assessment Index</button>
+      <button class="tab" data-tab="schedule">Assessment Schedule</button>
       <button class="tab" data-tab="request">Artifact Request</button>
       <button class="tab" data-tab="collector">Artifact Collector PS Scripts</button>
-      <button class="tab" data-tab="index">Assessment Index</button>
-      <button class="tab" data-tab="relationships">Safeguard Relationships</button>
       <button class="tab" data-tab="kql">Defender KQL</button>
       <button class="tab" data-tab="grouppolicy">Group Policy Settings</button>
+      <button class="tab" data-tab="relationships">Safeguard Relationships</button>
       <button class="tab" data-tab="recommend">Implementation Recommendations</button>
     </div>
 
     <div class="tab-panels">
-      <div class="panel active" id="panel-schedule">
+      <div class="panel" id="panel-schedule">
         <div id="scheduleContent" class="pdf-container" style="height: auto;">
         <object
           data="eis-css-assessment-schedule.pdf"
@@ -76,12 +76,12 @@
         </object>
         </div>
       </div>
+      <div class="panel active" id="panel-index"><div></div></div>
       <div class="panel" id="panel-request"><div></div></div>
-      <div class="panel" id="panel-collector"><div></div></div>
-      <div class="panel" id="panel-index"><div></div></div>
-      <div class="panel" id="panel-relationships"><div></div></div>
-      <div class="panel" id="panel-kql"><div></div></div>
+      <div class="panel" id="panel-collector"><div></div></div>    
+      <div class="panel" id="panel-kql"><div></div></div>        
       <div class="panel" id="panel-grouppolicy"><div></div></div>
+      <div class="panel" id="panel-relationships"><div></div></div>
       <div class="panel" id="panel-recommend"><div></div></div>
     </div>
   </section>
@@ -235,6 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+ //Auto-activate the Index tab on load (ensures the panel shows and markdown loads)
+const defaultTab =
+    document.querySelector(".tab.active") ||
+    document.querySelector('.tab[data-tab="index"]');
+defaultTab?.click();
+ 
   // =================== Search ===================
   const searchInput = document.getElementById("searchInput");
   searchInput.addEventListener("input", e => {
