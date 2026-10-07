@@ -27,12 +27,13 @@
       linear-gradient(90deg, var(--grid) 1px, transparent 1px);
     background-size: 28px 28px;
   }
-  #app{ display:grid; grid-template-columns: 300px 1fr 300px; height:100vh; }
+  #app{ display:flex; flex-direction:column; height:100vh; }
+  #body{ position:relative; flex:1 1 auto; min-height:0; overflow:hidden; }
   header{
-    grid-column: 1 / -1;
+    flex:none;
     padding:14px 20px;
     border-bottom:1px solid var(--line);
-    display:flex; align-items:baseline; gap:14px;
+    display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;
     background:linear-gradient(180deg, rgba(255,138,61,0.06), transparent);
   }
   header .mark{
@@ -56,8 +57,59 @@
   }
   #shareStatus.show{ opacity:1; }
 
-  .col{ border-right:1px solid var(--line); overflow-y:auto; padding:16px; }
-  .col.right{ border-right:none; border-left:1px solid var(--line); }
+  #hintBar{
+    flex:none; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    padding:8px 20px; background:var(--panel); border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; color:var(--dim);
+  }
+  #hintBar .hint-item{ display:flex; align-items:center; gap:5px; }
+  #hintBar .hint-item b{ color:var(--text); font-weight:600; }
+  #hintBar .hint-sep{ color:var(--line); }
+  #hintBar .tab-glyph{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:15px; height:15px; border:1px solid var(--dim); border-radius:3px;
+    color:var(--text); font-size:10px; flex:none;
+  }
+  #hintBar kbd{
+    font-family:var(--mono); font-size:10.5px; color:var(--text);
+    background:var(--bg); border:1px solid var(--line); border-radius:3px; padding:1px 5px;
+  }
+  #hintBar #hintClose{
+    margin-left:auto; background:none; border:none; color:var(--dim); font-size:16px;
+    line-height:1; cursor:pointer; padding:0 2px;
+  }
+  #hintBar #hintClose:hover{ color:var(--accent); }
+  #hintBar.hidden{ display:none; }
+
+  /* Map fills the entire body at all times — panels never push or resize it (see #graph rule below). */
+
+  /* Side panels are always slide-over drawers, on every screen size. */
+  .col{
+    position:absolute; top:0; bottom:0; width:340px; max-width:88vw;
+    background:var(--bg); z-index:30; overflow-y:auto; padding:16px;
+    box-shadow:0 0 36px rgba(0,0,0,0.6);
+    transition: transform 0.25s ease;
+  }
+  .col.left{ left:0; border-right:1px solid var(--line); transform:translateX(-100%); }
+  .col.right{ right:0; border-left:1px solid var(--line); transform:translateX(100%); }
+  .col.left.open{ transform:translateX(0); }
+  .col.right.open{ transform:translateX(0); }
+
+  .panel-toggle{
+    position:absolute; top:14px; z-index:40; width:24px; height:48px;
+    background:var(--panel); border:1px solid var(--line); color:var(--dim);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    font-family:var(--mono); font-size:13px; padding:0;
+  }
+  .panel-toggle:hover{ color:var(--accent); border-color:var(--accent); }
+  .panel-toggle.left{ left:0; border-radius:0 6px 6px 0; }
+  .panel-toggle.right{ right:0; border-radius:6px 0 0 6px; }
+
+  #backdrop{
+    position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:25;
+    opacity:0; pointer-events:none; transition:opacity 0.2s ease;
+  }
+  #backdrop.show{ opacity:1; pointer-events:auto; }
 
   h2.section{
     font-family:var(--mono); font-size:11px; letter-spacing:0.12em;
@@ -100,7 +152,7 @@
 
   .legend-note{ font-size:11.5px; color:var(--dim); line-height:1.5; margin-top:6px; }
 
-  #graph{ position:relative; overflow:hidden; }
+  #graph{ position:absolute; inset:0; overflow:hidden; }
   #graph svg{ width:100%; height:100%; display:block; cursor:grab; }
   #graph svg:active{ cursor:grabbing; }
 
@@ -159,7 +211,17 @@
     <span id="shareStatus"></span>
   </header>
 
-  <div class="col left">
+  <div id="hintBar">
+    <span class="hint-item"><span class="tab-glyph">›</span> tap the left tab (or edge of the map) to open <b>Filters</b></span>
+    <span class="hint-sep">·</span>
+    <span class="hint-item"><span class="tab-glyph">‹</span> tap the right tab to open <b>Details</b> for a selected Safeguard</span>
+    <span class="hint-sep">·</span>
+    <span class="hint-item">tap outside a panel, or press <kbd>Esc</kbd>, to close it</span>
+    <button id="hintClose" title="Dismiss this help text" aria-label="Dismiss">×</button>
+  </div>
+
+  <div id="body">
+  <div class="col left" id="leftPanel">
     <h2 class="section">Search</h2>
     <input class="search" id="search" placeholder="e.g. 4.1 or 'MFA'">
 
@@ -176,6 +238,8 @@
 
   <div id="graph">
     <div id="tooltip"></div>
+    <button class="panel-toggle left" id="toggleLeft" title="Hide filters">‹</button>
+    <button class="panel-toggle right" id="toggleRight" title="Hide details">›</button>
   </div>
 
   <div class="col right" id="detail">
@@ -185,6 +249,9 @@
       <b>Quick stats</b>
       <div id="quickstats" style="margin-top:8px;"></div>
     </div>
+  </div>
+
+  <div id="backdrop"></div>
   </div>
 </div>
 
@@ -492,7 +559,8 @@ const graphDiv = document.getElementById("graph");
 const width = () => graphDiv.clientWidth, height = () => graphDiv.clientHeight;
 const svg = d3.select("#graph").append("svg");
 const g = svg.append("g");
-svg.call(d3.zoom().scaleExtent([0.15,4]).on("zoom", (ev)=> g.attr("transform", ev.transform)));
+const zoom = d3.zoom().scaleExtent([0.15,4]).on("zoom", (ev)=> g.attr("transform", ev.transform));
+svg.call(zoom);
 
 svg.append("defs").append("marker")
   .attr("id","arrow").attr("viewBox","0 -4 8 8").attr("refX",16).attr("refY",0)
@@ -551,13 +619,64 @@ function resize(){
   svg.attr("width", width()).attr("height", height());
   sim.force("x").x(d=> (d.control-9.5) * (width()/19));
   sim.alpha(0.3).restart();
+  // re-center the pan around the new viewport middle (e.g. after a side panel
+  // collapses/expands and the graph's available width changes), keeping whatever
+  // zoom level the user currently has
+  const k = d3.zoomTransform(svg.node()).k;
+  svg.call(zoom.transform, d3.zoomIdentity.translate(width()/2, height()/2).scale(k));
 }
 window.addEventListener("resize", resize);
 setTimeout(resize, 10);
 
-// initial camera nudge
-svg.call(d3.zoom().transform, d3.zoomIdentity.translate(width()/2, height()/2).scale(0.9));
-g.attr("transform", `translate(${width()/2},${height()/2}) scale(0.9)`);
+// initial camera nudge — via the same zoom instance so its internal state stays
+// in sync with what's on screen (a manual g.attr() here would desync the two)
+svg.call(zoom.transform, d3.zoomIdentity.translate(width()/2, height()/2).scale(0.9));
+
+// ---- side panels: universal slide-over drawers, closed by default ----
+const leftPanel = d3.select("#leftPanel");
+const rightPanel = d3.select("#detail");
+const toggleLeftBtn = d3.select("#toggleLeft");
+const toggleRightBtn = d3.select("#toggleRight");
+const backdrop = d3.select("#backdrop");
+
+function updateBackdrop(){
+  const anyOpen = leftPanel.classed("open") || rightPanel.classed("open");
+  backdrop.classed("show", anyOpen);
+}
+
+function setPanelOpen(side, open){
+  const panel = side === "left" ? leftPanel : rightPanel;
+  const btn = side === "left" ? toggleLeftBtn : toggleRightBtn;
+  panel.classed("open", open);
+  // arrow direction always points toward the action the button performs
+  const showIcon = side === "left" ? "›" : "‹";
+  const hideIcon = side === "left" ? "‹" : "›";
+  btn.text(open ? hideIcon : showIcon)
+     .attr("title", (open ? "Hide " : "Show ") + (side === "left" ? "filters" : "details"));
+  updateBackdrop();
+  // the map itself never changes size when a panel opens/closes (it's an overlay,
+  // not part of the layout flow) — so no resize()/recenter call is needed here
+}
+
+toggleLeftBtn.on("click", ()=> setPanelOpen("left", !leftPanel.classed("open")));
+toggleRightBtn.on("click", ()=> setPanelOpen("right", !rightPanel.classed("open")));
+backdrop.on("click", ()=>{
+  setPanelOpen("left", false);
+  setPanelOpen("right", false);
+});
+window.addEventListener("keydown", (ev)=>{
+  if(ev.key === "Escape"){
+    setPanelOpen("left", false);
+    setPanelOpen("right", false);
+  }
+});
+
+// start with both drawers closed so the map is the full-width view by default
+setPanelOpen("left", false);
+setPanelOpen("right", false);
+
+// help hint bar — dismissible for the session (no persistence, per this app's no-local-storage design)
+d3.select("#hintClose").on("click", ()=> d3.select("#hintBar").classed("hidden", true));
 
 // ---- filtering ----
 function nodeVisible(d){
@@ -567,10 +686,10 @@ function applyFilter(){
   // re-run current selection (if any) so IG/Control filters compose with the
   // upstream/downstream highlight instead of overriding it
   if(selectedId && nodeVisible(nodes.find(n=>n.id===selectedId))){
-    selectNode(selectedId, {skipUrl:true});
+    selectNode(selectedId, {skipUrl:true, internal:true});
     return;
   }
-  if(selectedId){ selectNode(null, {skipUrl:true}); return; }
+  if(selectedId){ selectNode(null, {skipUrl:true, internal:true}); return; }
   nodeSel.classed("faded", d=> !nodeVisible(d));
   linkSel.classed("faded", d=> !nodeVisible(d.source) || !nodeVisible(d.target));
 }
@@ -604,6 +723,8 @@ function getAllDescendants(id){ return traverse(id, downstreamAdj); } // every d
 let selectedId = null;
 function selectNode(id, opts){
   const skipUrl = opts && opts.skipUrl;
+  const internal = opts && opts.internal;
+  if(id && !internal) setPanelOpen("right", true);
   selectedId = id;
   nodeSel.classed("selected", d=> d.id===id);
   if(!id){
