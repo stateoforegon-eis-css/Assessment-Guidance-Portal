@@ -91,7 +91,7 @@ const markdownFiles = {
   kql: "Defender-KQL.md",
   grouppolicy: "Group-Policy-Settings.md",
   recommend: "Implementation-Recommendations.md",
-  crosswalk: "OR-Standards-Crosswalk.md",
+  crosswalk: "OR-Standards-Crosswalk.md"
 };
 
 const repoBase =
